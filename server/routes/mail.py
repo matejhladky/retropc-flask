@@ -11,7 +11,7 @@ def send_mail():
     message = data.get('message')
     product = data.get('product')
 
-    msg = Message(subject="New Reservation", sender=email, recipients=['your-email@gmail.com'])
+    msg = Message(subject="New Reservation", sender=email, recipients=['mat.hladky@gmail.com'])
     msg.body = f"Email: {email}\nMessage: {message}\nProduct: {product}"
     mail.send(msg)
 
