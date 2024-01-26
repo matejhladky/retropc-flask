@@ -3,6 +3,8 @@ from flask.cli import with_appcontext
 from .database import db
 from .models import User, Product, Category
 
+DEFAULT_PROD_DESC = "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+
 @click.group()
 def cli():
     pass
@@ -30,8 +32,12 @@ def seed_db_command():
 
     if not Product.query.first():
         products = [
-            Product(name='product_1', price=10, category_id=1, image_url='product1.png'),
-            Product(name='product_2', price=20, category_id=2, image_url='product2.png'),
+            Product('product_1', 10, 1, 'product1.png', DEFAULT_PROD_DESC),
+            Product('product_2', 20, 2, 'product1.png', DEFAULT_PROD_DESC),
+            Product('product_3', 30, 3, 'product1.png', DEFAULT_PROD_DESC),
+            Product('product_4', 40, 1, 'product1.png', DEFAULT_PROD_DESC),
+            Product('product_5', 50, 2, 'product1.png', DEFAULT_PROD_DESC),
+            Product('product_6', 60, 3, 'product1.png', DEFAULT_PROD_DESC)
         ]
         db.session.add_all(products)
 

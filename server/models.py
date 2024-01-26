@@ -15,12 +15,14 @@ class Product(db.Model):
     price = Column(Float, nullable=False)
     category_id = Column(Integer, ForeignKey('categories.id'), nullable=False)
     image_url = Column(String(255))
+    description = Column(String(1000))
 
-    def __init__(self, name, price, category_id, image_url):
+    def __init__(self, name, price, category_id, image_url, description):
         self.name = name
         self.price = price
         self.category_id = category_id
         self.image_url = image_url
+        self.description = description
 
     def serialize(self, include_image=True):
         data = {
@@ -28,6 +30,7 @@ class Product(db.Model):
             'name': self.name,
             'price': self.price,
             'category_id': self.category_id,
+            'description': self.description
         }
 
         if include_image and self.image_url:
