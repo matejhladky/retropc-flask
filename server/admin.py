@@ -35,12 +35,11 @@ class ProductModelView(ModelView):
         }
     }
 
-    # Optional: Define how the image is displayed in the list view
     def _list_thumbnail(view, context, model, name):
         if not model.image_url:
             return ''
         
-        return f'<img src="{url_for("static", filename="path/to/thumbnails/" + model.image_url)}">'
+        return f'{model.image_url}'
     
     column_formatters = {
         'image_url': _list_thumbnail
