@@ -27,7 +27,7 @@ class ProductModelView(ModelView):
     form_args = {
         'image_url': {
             'label': 'Image',
-            'base_path': './server/uploads',
+            'base_path': '/var/data',
             'relative_path': '',
             'allow_overwrite': False,
             'namegen': lambda model, file_data: secure_filename(file_data.filename),
