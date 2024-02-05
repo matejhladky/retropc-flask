@@ -22,7 +22,8 @@ def seed_db_command():
         user = User(username='admin', password='admin')
         db.session.add(user)
 
-    if not Category.query.first():
+    if False:
+    # if not Category.query.first():
         categories = [
             Category(name='Category #1', slug='category_1'),
             Category(name='Category #2', slug='category_2'),
@@ -30,7 +31,8 @@ def seed_db_command():
         ]
         db.session.add_all(categories)
 
-    if not Product.query.first():
+    if False:
+    # if not Product.query.first():
         products = [
             Product('product_1', 10, 1, 'product1.png', DEFAULT_PROD_DESC),
             Product('product_2', 20, 2, 'product1.png', DEFAULT_PROD_DESC),

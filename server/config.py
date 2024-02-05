@@ -3,10 +3,10 @@ import os
 class Config:
     # Base config
     SECRET_KEY = os.environ.get('SECRET_KEY', 'default-secret')
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', 'sqlite:///dev.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     FLASK_ADMIN_SWATCH = 'cosmo'
-    IMG_UPLOADS = './uploads'
+    IMG_UPLOADS = '/var/data'
     
     # Mail settings
     MAIL_SERVER = 'smtp.gmail.com'

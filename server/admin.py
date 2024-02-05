@@ -46,9 +46,13 @@ class ProductModelView(ModelView):
     }
 
 
+class CategoryModelView(ModelView):
+    column_list = ('id', 'name', 'slug')
+
+
 def setup_admin(app):
     admin = Admin(app, name='RetroPC Dashboard', index_view=CustomAdminIndexView(), template_mode='bootstrap3')
     admin.add_view(ProductModelView(Product, db.session))
-    admin.add_view(ModelView(Category, db.session))
+    admin.add_view(CategoryModelView(Category, db.session))
     admin.add_view(ModelView(User, db.session))
 
