@@ -1,8 +1,7 @@
 from flask_admin import Admin, AdminIndexView
 from flask_admin.contrib.sqla import ModelView
 from flask_admin.form import ImageUploadField
-from wtforms import Form, fields
-from wtforms_sqlalchemy.fields import QuerySelectField
+from wtforms.fields import TextAreaField
 from werkzeug.utils import secure_filename
 from flask_login import current_user
 from flask import redirect, url_for
@@ -21,7 +20,8 @@ class ProductModelView(ModelView):
     form_columns = ('name', 'price', 'category_id', 'image_url', 'description')
 
     form_overrides = {
-        'image_url': ImageUploadField
+        'image_url': ImageUploadField,
+        'description': TextAreaField
     }
 
     form_args = {
