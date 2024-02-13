@@ -7,6 +7,9 @@ from flask_login import current_user
 from flask import redirect, url_for
 from .models import Product, Category, User
 from .database import db
+import os
+from PIL import Image
+
 
 class CustomAdminIndexView(AdminIndexView):
     def is_accessible(self):
@@ -15,8 +18,10 @@ class CustomAdminIndexView(AdminIndexView):
     def inaccessible_callback(self, name, **kwargs):
         return redirect(url_for('auth.login'))
 
+
 class ProductModelView(ModelView):
-    column_list = ('id', 'name', 'price', 'category_id', 'image_url', 'description')
+    column_list = ('id', 'name', 'price', 'category_id',
+                   'image_url', 'description')
     form_columns = ('name', 'price', 'category_id', 'image_url', 'description')
 
     form_overrides = {
@@ -38,12 +43,26 @@ class ProductModelView(ModelView):
     def _list_thumbnail(view, context, model, name):
         if not model.image_url:
             return ''
-        
+
         return f'{model.image_url}'
-    
+
     column_formatters = {
         'image_url': _list_thumbnail
     }
+
+    def on_model_change(self, form, model, is_created):
+        super(ProductModelView, self).on_model_change(form, model, is_created)
+        image_field = form.image_url.data
+        if image_field:
+            image_path = os.path.join(self.form_args['image_url']['base_path'], model.image_url)
+            self.compress_image(image_path)
+
+    def compress_image(self, image_path, quality=50):
+        if os.path.isfile(image_path):
+            img = Image.open(image_path)
+            if img.mode in ("RGBA", "P"):
+                img = img.convert("RGB")
+            img.save(image_path, 'JPEG', quality=quality, optimize=True)
 
 
 class CategoryModelView(ModelView):
@@ -51,8 +70,8 @@ class CategoryModelView(ModelView):
 
 
 def setup_admin(app):
-    admin = Admin(app, name='RetroPC Dashboard', index_view=CustomAdminIndexView(), template_mode='bootstrap3')
+    admin = Admin(app, name='RetroPC Dashboard',
+                  index_view=CustomAdminIndexView(), template_mode='bootstrap3')
     admin.add_view(ProductModelView(Product, db.session))
     admin.add_view(CategoryModelView(Category, db.session))
     admin.add_view(ModelView(User, db.session))
-
