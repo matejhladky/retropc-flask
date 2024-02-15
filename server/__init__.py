@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, send_from_directory
 from .config import Config
 from .extensions import init_app_extensions
 from .database import db
@@ -26,6 +26,10 @@ def create_app(config_class=Config):
     app.register_blueprint(category_bp, url_prefix='/api/v1/categories')
 
     setup_admin(app)
+
+    @app.route('/static/<filename>')
+    def uploaded_file(filename):
+        return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
     with app.app_context():
         db.create_all()

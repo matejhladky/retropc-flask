@@ -6,7 +6,7 @@ class Config:
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', 'sqlite:///dev.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     FLASK_ADMIN_SWATCH = 'cosmo'
-    IMG_UPLOADS = '/var/data'
+    UPLOAD_FOLDER = '/var/data'
     
     # Mail settings
     MAIL_SERVER = 'smtp.gmail.com'

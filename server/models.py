@@ -34,9 +34,13 @@ class Product(db.Model):
         }
 
         if include_image and self.image_url:
-            with open('/var/data/' + self.image_url, 'rb') as image_file:
-                encoded_image = base64.b64encode(image_file.read()).decode('utf-8')
-            data['image'] = encoded_image
+            image_url = self.image_url
+            data['image_url'] = image_url
+
+        # if include_image and self.image_url:
+        #     with open('/var/data/' + self.image_url, 'rb') as image_file:
+        #         encoded_image = base64.b64encode(image_file.read()).decode('utf-8')
+        #     data['image'] = encoded_image
 
         return data
 
