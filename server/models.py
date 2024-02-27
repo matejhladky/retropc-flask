@@ -1,7 +1,7 @@
 import base64
 
 from flask_login import UserMixin
-from sqlalchemy import Column, Float, ForeignKey, Integer, String
+from sqlalchemy import Column, Float, ForeignKey, Integer, String, Boolean
 from sqlalchemy.orm import relationship
 from werkzeug.security import check_password_hash, generate_password_hash
 
@@ -16,13 +16,15 @@ class Product(db.Model):
     category_id = Column(Integer, ForeignKey('categories.id'), nullable=False)
     image_url = Column(String(255))
     description = Column(String(1000))
+    is_sold = Column(Boolean, default=False, nullable=False)
 
-    def __init__(self, name, price, category_id, image_url, description):
+    def __init__(self, name, price, category_id, image_url, description, is_sold):
         self.name = name
         self.price = price
         self.category_id = category_id
         self.image_url = image_url
         self.description = description
+        self.is_sold
 
     def serialize(self, include_image=True):
         data = {
@@ -30,7 +32,8 @@ class Product(db.Model):
             'name': self.name,
             'price': self.price,
             'category_id': self.category_id,
-            'description': self.description
+            'description': self.description,
+            'is_sold': self.is_sold
         }
 
         if include_image and self.image_url:

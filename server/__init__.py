@@ -1,6 +1,6 @@
 from flask import Flask, send_from_directory
 from .config import Config
-from .extensions import init_app_extensions
+from .extensions import init_app_extensions, migrate
 from .database import db
 from .admin import setup_admin
 from .commands import register_commands
@@ -15,6 +15,8 @@ def create_app(config_class=Config):
     app.config.from_object(config_class)
 
     db.init_app(app)
+
+    migrate.init_app(app, db)
 
     init_app_extensions(app)
 

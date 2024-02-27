@@ -18,7 +18,7 @@ def init_db_command():
 @cli.command("seed-db")
 @with_appcontext
 def seed_db_command():
-    if not User.query.first():
+    if False:
         user = User(username='admin', password='admin')
         db.session.add(user)
 

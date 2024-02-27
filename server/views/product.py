@@ -13,7 +13,8 @@ class ProductResource(Resource):
                 return make_response(jsonify(product.serialize(True)), 200)
             return {"error": "Product not found"}, 404
         else:
-            products = Product.query.all()
+            products = Product.query.filter_by(is_sold=False).all()
+            print("Loaded products: ", products)
             return make_response(jsonify([product.serialize(True) for product in products]), 200)
 
 product_api.add_resource(ProductResource, '/', '/<int:product_id>')

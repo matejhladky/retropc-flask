@@ -2,6 +2,7 @@ from flask_admin import Admin
 from flask_cors import CORS
 from flask_login import LoginManager
 from flask_mail import Mail
+from flask_migrate import Migrate
 
 from .admin import CustomAdminIndexView
 from .models import User
@@ -17,6 +18,8 @@ def load_user(user_id):
 mail = Mail()
 
 admin = Admin(template_mode='bootstrap3', index_view=CustomAdminIndexView())
+
+migrate = Migrate()
 
 cors = CORS()
 

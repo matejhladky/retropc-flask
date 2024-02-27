@@ -10,7 +10,8 @@ class CategoryResource(Resource):
         if category_slug:
             category = Category.query.filter_by(slug=category_slug).first()
             if category:
-                products_in_category = Product.query.filter(Product.category.has(slug=category_slug)).all()
+                products_in_category = Product.query.filter(Product.category.has(slug=category_slug), Product.is_sold == False).all()
+                print("Products in category: ", products_in_category)
                 return jsonify([product.serialize() for product in products_in_category])
             return {"error": "Category not found"}, 404
         else:

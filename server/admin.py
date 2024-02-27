@@ -21,8 +21,8 @@ class CustomAdminIndexView(AdminIndexView):
 
 class ProductModelView(ModelView):
     column_list = ('id', 'name', 'price', 'category_id',
-                   'image_url', 'description')
-    form_columns = ('name', 'price', 'category_id', 'image_url', 'description')
+                   'image_url', 'description', 'is_sold')
+    form_columns = ('name', 'price', 'category_id', 'is_sold', 'image_url', 'description')
 
     form_overrides = {
         'image_url': ImageUploadField,
